@@ -55,14 +55,14 @@ class SearchController extends GetxController {
 
   search() async {
     String text = state.searchBarController.value.text;
-    if (text.contains("http")){
+    if (text.contains("http")) {
       searchFromPlayList();
-    }else{
+    } else {
       searchFromSong();
     }
   }
 
-  searchFromSong() async{
+  searchFromSong() async {
     String text = state.searchBarController.value.text;
     // print(text);
     if (text.isEmpty) return;
@@ -122,29 +122,40 @@ class SearchController extends GetxController {
         /// http://www.kuwo.cn/playlist_detail/3120880453
         id = text.split("playlist_detail/").last.toString();
         break;
+      case AudioSource.migu:
+
+        /// https://music.migu.cn/v3/music/playlist/198422762?origin=1001001
+        id =
+            (text.split("playlist/").last.toString()).split("?").first.toString();
+        break;
       default:
         break;
     }
 
-    String source = state.audioSource.toString().split(".").last;
-    var dio = Dio();
-    String host = Api.playlist;
-    Map<String, dynamic> header = AuthUtil.getHeader(host);
-    dio.options.headers = header;
-    Map<String, dynamic> param = {
-      "playlist_id": id,
-      "source": source,
-      "type": "playlist"
-    };
+    // String source = state.audioSource.toString().split(".").last;
+    // var dio = Dio();
+    // String host = Api.playlist;
+    // Map<String, dynamic> header = AuthUtil.getHeader(host);
+    // dio.options.headers = header;
+    // Map<String, dynamic> param = {
+    //   "playlist_id": id,
+    //   "source": source,
+    //   "type": "playlist"
+    // };
     // print("param = $param");
-    final response = await dio.get(host, queryParameters: param);
+    // final response = await dio.get(host, queryParameters: param);
     // print("response = $response");
-    List<dynamic> mapList = jsonDecode(response.toString());
-    List<HistoryPo> songs =
-        mapList.map((e) => HistoryPo.fromSearchJson(e)).toList();
-    state.songs = songs;
-    state.selectedIndex = -1;
-    update();
+    // List<dynamic> mapList = jsonDecode(response.toString());
+
+    if (id.isEmpty) return;
+    var result = await NetUtil.playlist(id, state.audioSource);
+    if (result != null) {
+      List<HistoryPo> songs =
+          result.map((e) => HistoryPo.fromSearchJson(e)).toList();
+      state.songs = songs;
+      state.selectedIndex = -1;
+      update();
+    }
   }
 
   chooseSong(HistoryPo item, int index) {

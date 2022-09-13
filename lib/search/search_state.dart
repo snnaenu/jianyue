@@ -4,7 +4,7 @@ import 'package:weapon/model/play_list_item_model.dart';
 import 'package:weapon/model/song_list_item.dart';
 
 
-enum AudioSource { netease, tencent, xiami, kugou, baidu, kuwo }
+enum AudioSource { netease, tencent, xiami, kugou, baidu, kuwo, migu }
 
 class SearchState {
   HistoryPo? selectedItem;
@@ -21,6 +21,7 @@ class SearchState {
     {"name": "酷狗", "source": AudioSource.kugou},
     // {"name": "百度", "source": AudioSource.baidu},
     {"name": "酷我", "source": AudioSource.kuwo},
+    {"name": "咪咕", "source": AudioSource.migu},
   ];
   List<DropdownMenuItem<String>> subRouteNameMenuItems = [];
   String selectedName = "网易";

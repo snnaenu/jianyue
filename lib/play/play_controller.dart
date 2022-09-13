@@ -151,7 +151,7 @@ class PlayController extends GetxController {
     }
 
     var result = await audioPlayer.play(
-      url,
+      Uri.encodeFull(url),
       position: playPosition,
     );
     if (result == 1) {

@@ -42,13 +42,17 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
     // LeanCloudUtil.initSDK();
+  }
+
+  test() async {
+    var map = await NetUtil.playlist("63022", AudioSource.kugou);
+    print(map);
   }
 
   @override
   Widget build(BuildContext context) {
-
+    test();
     return GetMaterialApp(
         initialRoute: RouteConfig.webLand,
         debugShowCheckedModeBanner: false,

@@ -34,8 +34,7 @@ class SearchView extends StatelessWidget {
                   behavior: ScrollConfiguration.of(context)
                       .copyWith(scrollbars: false),
                   child: ListView.separated(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 15.dp, horizontal: 0),
+                    padding: EdgeInsets.only(top: 15.dp),
                     itemBuilder: (ctx, index) {
                       HistoryPo item = controller.state.songs[index];
                       return AudioItemWidget(

@@ -55,6 +55,7 @@ dependencies:
   universal_platform: ^1.0.0+1
   cookie_jar: 3.0.1
   dio_cookie_manager: ^2.0.0
+  html: ^0.15.0
 
 dev_dependencies:
   flutter_test:

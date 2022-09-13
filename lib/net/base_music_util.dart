@@ -103,6 +103,12 @@ abstract class BaseMusicUtil {
           "Accept-Encoding": "gzip, deflate, br",
         };
         break;
+      case AudioSource.migu:
+        headerMap = {
+          'Referer': 'http://music.migu.cn/',
+          'Content-type': 'application/x-www-form-urlencoded',
+        };
+        break;
     }
     return headerMap;
   }
