@@ -12,6 +12,7 @@ import 'package:weapon/model/history_po.dart';
 import 'package:weapon/model/song_detail.dart';
 import 'package:weapon/model/song_list_item.dart';
 import 'package:weapon/model/song_rank_model.dart';
+import 'package:weapon/net/kugou_music_request.dart';
 import 'package:weapon/net/net_util.dart';
 import 'package:weapon/play/play_state.dart';
 import 'package:weapon/search/search_state.dart';
@@ -54,6 +55,15 @@ class PlayController extends GetxController {
           await NetUtil.lyric(historyPo.lyricId, historyPo.sourceType);
       if (lyricMap != null) {
         historyPo.lyrics = LyricUtil.formatLyric(lyricMap["lyric"]);
+      }
+    }
+
+    if (historyPo.picUrl.isEmpty && historyPo.sourceType == AudioSource.kugou) {
+      // print("historyPo.id = ${historyPo.playId}");
+      Map<String, dynamic>? song = await KugouMusicRequest().song(historyPo.playId);
+      if (song != null){
+        historyPo.picUrl = song["imgUrl"].toString().replaceAll("{size}", "400");
+        // print(song);
       }
     }
 

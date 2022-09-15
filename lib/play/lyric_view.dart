@@ -156,7 +156,7 @@ class LyricView extends CustomPainter with ChangeNotifier {
     Future.delayed(const Duration(milliseconds: 300), () {
       totalHeight = (lyricPaints[0].height + 30.dp) * (lyricPaints.length - 1);
 
-      print("totalHeight = $totalHeight");
+      // print("totalHeight = $totalHeight");
     });
   }
 

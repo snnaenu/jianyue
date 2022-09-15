@@ -52,7 +52,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    test();
+    // test();
     return GetMaterialApp(
         initialRoute: RouteConfig.webLand,
         debugShowCheckedModeBanner: false,

@@ -1,6 +1,4 @@
-简悦 是一款简单免费的音乐播放器，自己写Flutter也有一段时间了，刚好最近公司的项目想在PC端重写一个，就想着用Flutter实现试一试，于是先拿这个项目来熟悉一下Flutter开发PC端，练练手，主要用于学习及个人使用，没有商业用途哈，还有很重要的一点：不支持收费音乐的播放哦。
-
-目前可以运行在Mac、iOS、Android上，Web端本来也是可以的，但是SQLite数据存储还没有比较好的方案，就暂时放弃了，Windows没有装Win系统的电脑，所以还没跑过，不知道效果啥样，PC和手机端都做了单独的适配。UI界面和icon用Sketch来设计完成的，还支持自动切换深色/浅色模式，后端部分接口时候云函数实现，用于拉取歌单和单曲的播放链接。
+简悦 是一款简单免费跨平台的音乐播放器，目前可以运行在Mac、iOS、Android上，Web端本来也是可以的，但是SQLite数据存储还没有比较好的方案，就暂时放弃了，Windows没有装Win系统的电脑，所以还没跑过，不知道效果啥样，PC和手机端都做了单独的适配。UI界面和icon用Sketch来设计完成的，还支持自动切换深色/浅色模式，后端部分接口时候云函数实现，用于拉取歌单和单曲的播放链接。
 
 ### 主要功能：
 
@@ -47,7 +45,8 @@ Channel stable, 2.5.2
 | ![451658286370_.pic](https://s2.loli.net/2022/07/20/ubAprcSdTe6n3Va.jpg) | ![401658286368_.pic](https://s2.loli.net/2022/07/20/cyYZJeTDlzHtFPn.jpg) |
 | ![471658286375_.pic](https://s2.loli.net/2022/07/20/eSNH1o3WBYqEzK5.jpg) |                                                              |
 
-感谢：
+
+感谢所有的同类的开源项目，下面几个参考比较多的或者在项目里面有用到的：
 
 [Meting](https://github.com/metowolf/Meting)
 
@@ -57,6 +56,3 @@ Channel stable, 2.5.2
 
 [v1.hitokoto.cn](https://v1.hitokoto.cn/)
 
-微信公众号：nnxkcloud，关注后有更多有意思的内容哦！
-
-<img src="https://s2.loli.net/2022/07/25/OZh2nqwxVdraLtR.jpg" alt="qrcode_for_gh_a83f08fc43d0_860" width="180px" />

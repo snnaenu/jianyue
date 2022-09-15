@@ -33,10 +33,10 @@ class SongsController extends GetxController {
     super.onReady();
 
     switch (state.sourceType) {
-      case SongSourceType.playList:
+      case SongListSourceType.playList:
         loadData();
         break;
-      case SongSourceType.rankList:
+      case SongListSourceType.rankList:
         state.offset = 0;
         loadDataFromRank();
         break;
@@ -75,8 +75,9 @@ class SongsController extends GetxController {
     // List<HistoryPo> songs =
     //     mapList.map((e) => HistoryPo.fromSearchJson(e)).toList();
 
+    AudioSource source = state.audioSource ?? AudioSource.netease;
     List<Map<String, dynamic>>? playlist =
-        await NetUtil.playlist(id.toString(), AudioSource.netease);
+        await NetUtil.playlist(id.toString(), source);
     if (playlist != null) {
       List<HistoryPo> songs =
           playlist.map((e) => HistoryPo.fromSearchJson(e)).toList();
@@ -127,12 +128,12 @@ class SongsController extends GetxController {
     update();
   }
 
-  Future<void> loadRefresh(SongSourceType sourceType) async {
+  Future<void> loadRefresh(SongListSourceType sourceType) async {
     switch (sourceType) {
-      case SongSourceType.playList:
+      case SongListSourceType.playList:
         loadData();
         break;
-      case SongSourceType.rankList:
+      case SongListSourceType.rankList:
         state.offset = 0;
         loadDataFromRank();
         break;

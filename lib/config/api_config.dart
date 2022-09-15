@@ -13,9 +13,7 @@ class Api {
 
   /// 歌单
   static String kugouPlayList =
-      "http://mobilecdn.kugou.com/api/v3/category/special?withsong=1&sort=3&plat=0&ugc=1&page=1&categoryid=0&pagesize=20";
-  // http://mobilecdnbj.kugou.com/api/v3/rank/list?version=9108&plat=0&showtype=2&parentid=0&apiver=6&area_code=1&withsong=1&with_res_tag=1
-
+      "http://mobilecdn.kugou.com/api/v3/category/special?withsong=0&sort=3&plat=0&ugc=1&categoryid=0";
 
   /// 获取歌单所有歌曲信息
   static String songListDetail =

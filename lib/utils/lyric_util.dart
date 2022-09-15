@@ -4,7 +4,7 @@ class LyricUtil {
   /// 格式化歌词
   static List<Lyric> formatLyric(String? lyricStr) {
     if (lyricStr == null || lyricStr.isEmpty) return [];
-    print("lyricStr： " + lyricStr);
+    // print("lyricStr： " + lyricStr);
     RegExp reg = RegExp(r"^\[\d{2}");
     List<Lyric> result =
         lyricStr.split("\n").where((r) => reg.hasMatch(r)).map((s) {

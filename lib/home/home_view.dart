@@ -162,7 +162,7 @@ class _HomeViewState extends State<HomeView> {
             context,
             SongsView(
               playListItem: playListItem,
-              sourceType: SongSourceType.playList,
+              sourceType: SongListSourceType.playList,
             ));
         // NavigatorUtil.push(context, PlayListView());
         // Get.to(()=>SongsView());

@@ -178,126 +178,131 @@ class AudioItemWidget extends StatelessWidget {
     String url = picUrl;
     String time = TimeFormatUtil.secondToTimeString(duration);
     String artistName = singer ?? "";
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 0.dp, horizontal: 15.dp),
-      height: 76.dp,
-      decoration: BoxDecoration(color: ThemeConfig.theme.cardColor),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SizedBox(
-            width: 10.dp,
-          ),
-          GestureDetector(
-            onTap: () {
-              clickCallBack();
-            },
-            child: Container(
-              // padding: EdgeInsets.only(left: 15.dp),
-              child: Icon(
-                isChoose
-                    ? Icons.pause_circle_rounded
-                    : Icons.play_arrow_rounded,
-                size: 20.sp,
-                color: Color(0xffc7c7c7),
-              ),
+    return InkWell(
+      onTap: () {
+        clickCallBack();
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 0.dp, horizontal: 15.dp),
+        height: 76.dp,
+        decoration: BoxDecoration(color: ThemeConfig.theme.cardColor),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // SizedBox(
+            //   width: 10.dp,
+            // ),
+            // GestureDetector(
+            //   onTap: () {
+            //     clickCallBack();
+            //   },
+            //   child: Container(
+            //     // padding: EdgeInsets.only(left: 15.dp),
+            //     child: Icon(
+            //       isChoose
+            //           ? Icons.pause_circle_rounded
+            //           : Icons.play_arrow_rounded,
+            //       size: 20.sp,
+            //       color: Color(0xffc7c7c7),
+            //     ),
+            //   ),
+            // ),
+            SizedBox(
+              width: 20.dp,
             ),
-          ),
-          SizedBox(
-            width: 20.dp,
-          ),
-          Expanded(
-              flex: 2,
-              child: Row(
-                children: [
-                  CachedNetworkImage(
-                    width: 45.dp,
-                    height: 45.dp,
-                    imageUrl: url,
-                    imageBuilder: (context, image) => Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(image: image),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(45.dp),
-                        ),
-                        border: Border.all(width: 1.5.dp, color: Colors.white),
-                      ),
-                    ),
-                    placeholder: (context, url) => Image.asset(
-                      "assets/images/album.png",
+            Expanded(
+                flex: 2,
+                child: Row(
+                  children: [
+                    CachedNetworkImage(
                       width: 45.dp,
                       height: 45.dp,
+                      imageUrl: url,
+                      imageBuilder: (context, image) => Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(image: image),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(45.dp),
+                          ),
+                          border: Border.all(width: 1.5.dp, color: Colors.white),
+                        ),
+                      ),
+                      placeholder: (context, url) => Image.asset(
+                        "assets/images/album.png",
+                        width: 45.dp,
+                        height: 45.dp,
+                      ),
+                      errorWidget: (context, url, error) => const Icon(
+                        Icons.error,
+                        color: Color(0xFFcccccc),
+                      ),
+                      fadeOutDuration: const Duration(seconds: 1),
+                      fadeInDuration: const Duration(seconds: 1),
                     ),
-                    errorWidget: (context, url, error) => const Icon(
-                      Icons.error,
-                      color: Color(0xFFcccccc),
+                    SizedBox(
+                      width: 20.dp,
                     ),
-                    fadeOutDuration: const Duration(seconds: 1),
-                    fadeInDuration: const Duration(seconds: 1),
+                    Expanded(
+                      child: Text(
+                        name,
+                        maxLines: 1,
+                        style: ThemeConfig.theme.textTheme.headline1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                )),
+            Expanded(
+                flex: 1,
+                child: Text(artistName,
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    style: ThemeConfig.theme.textTheme.subtitle1)),
+            Expanded(
+              flex: 1,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Icon(
+                    Icons.access_time_rounded,
+                    size: 16.dp,
+                    color: const Color(0xFFc9c9c9),
                   ),
                   SizedBox(
-                    width: 20.dp,
+                    width: 5.dp,
                   ),
-                  Expanded(
-                    child: Text(
-                      name,
+                  Text(time,
                       maxLines: 1,
-                      style: ThemeConfig.theme.textTheme.headline1,
+                      textAlign: TextAlign.end,
                       overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
+                      style: TextStyle(
+                          fontWeight: FontWeight.w300,
+                          fontSize: 13.sp,
+                          color: const Color(0xFF999999)))
                 ],
-              )),
-          Expanded(
-              flex: 1,
-              child: Text(artistName,
-                  maxLines: 1,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  style: ThemeConfig.theme.textTheme.subtitle1)),
-          Expanded(
-            flex: 1,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Icon(
-                  Icons.access_time_rounded,
-                  size: 16.dp,
-                  color: const Color(0xFFc9c9c9),
-                ),
-                SizedBox(
-                  width: 5.dp,
-                ),
-                Text(time,
-                    maxLines: 1,
-                    textAlign: TextAlign.end,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w300,
-                        fontSize: 13.sp,
-                        color: const Color(0xFF999999)))
-              ],
+              ),
             ),
-          ),
-          // GestureDetector(
-          //   onTap: () {
-          //     if (moreCallBack != null) {
-          //       moreCallBack();
-          //     }
-          //   },
-          //   child: Container(
-          //     padding: EdgeInsets.only(left: 15.dp, right: 0.dp),
-          //     child: const Icon(
-          //       Icons.more_horiz_rounded,
-          //       size: 16,
-          //       color: Color(0xFF999999),
-          //     ),
-          //   ),
-          // ),
-          SizedBox(
-            width: 10.dp,
-          ),
-        ],
+            // GestureDetector(
+            //   onTap: () {
+            //     if (moreCallBack != null) {
+            //       moreCallBack();
+            //     }
+            //   },
+            //   child: Container(
+            //     padding: EdgeInsets.only(left: 15.dp, right: 0.dp),
+            //     child: const Icon(
+            //       Icons.more_horiz_rounded,
+            //       size: 16,
+            //       color: Color(0xFF999999),
+            //     ),
+            //   ),
+            // ),
+            SizedBox(
+              width: 10.dp,
+            ),
+          ],
+        ),
       ),
     );
   }

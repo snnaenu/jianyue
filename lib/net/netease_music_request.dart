@@ -145,8 +145,8 @@ class NeteaseMusicRequest extends BaseMusicUtil {
     var result = await dio.post(path, queryParameters: map);
     var data = json.decode(result.data);
     // print(data["playlist"]["tracks"].length);
-    if (data["playlist"]["tracks"] != null &&
-        data["playlist"]["tracks"] is List) {
+    if (data["playlist"]?["tracks"] != null &&
+        data["playlist"]?["tracks"] is List) {
       return (data["playlist"]["tracks"] as List).map((item) {
         return formatSong(item);
       }).toList();

@@ -16,17 +16,20 @@ import 'package:weapon/model/play_list_item_model.dart';
 import 'package:weapon/model/rank_list_item_model.dart';
 import 'package:weapon/model/song_list_item.dart';
 import 'package:weapon/model/song_rank_model.dart';
+import 'package:weapon/search/search_state.dart';
 import 'package:weapon/utils/navigator_util.dart';
 
 class SongsView extends StatefulWidget {
   PlayListItemModel? playListItem;
   RankListItemModel? rankListItem;
-  SongSourceType sourceType;
+  SongListSourceType sourceType;
+  AudioSource? audioSource;
 
   SongsView(
       {Key? key,
       this.playListItem,
       this.rankListItem,
+        this.audioSource,
       required this.sourceType})
       : super(key: key);
 
@@ -44,6 +47,7 @@ class _SongsViewState extends State<SongsView> {
     controller.state.playListItem = widget.playListItem;
     controller.state.rankListItem = widget.rankListItem;
     controller.state.sourceType = widget.sourceType;
+    controller.state.audioSource = widget.audioSource;
   }
 
   @override
@@ -65,7 +69,7 @@ class _SongsViewState extends State<SongsView> {
             elevation: ThemeConfig.theme.appBarTheme.elevation,
             // centerTitle: true,
             title: Text(
-              widget.sourceType == SongSourceType.playList ? "歌单歌曲" : "榜单歌曲",
+              widget.sourceType == SongListSourceType.playList ? "歌单歌曲" : "榜单歌曲",
               style: ThemeConfig.theme.appBarTheme.titleTextStyle,
               overflow: TextOverflow.ellipsis,
             ),

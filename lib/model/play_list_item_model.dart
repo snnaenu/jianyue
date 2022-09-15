@@ -4,14 +4,14 @@
 class PlayListItemModel {
 
   int? id;
-  int? no;
+  // int? no;
   String? coverImgUrl;
   String? name;
-  int? playCount;
-  int? subscribedCount;
-  int? shareCount;
-  int? commentCount;
-  int? trackCount;
+  // int? playCount;
+  // int? subscribedCount;
+  // int? shareCount;
+  // int? commentCount;
+  // int? trackCount;
   String? nickname;
   String? createTime;
   List<String?>? tags;
@@ -20,14 +20,14 @@ class PlayListItemModel {
 
   PlayListItemModel({
     this.id,
-    this.no,
+    // this.no,
     this.coverImgUrl,
     this.name,
-    this.playCount,
-    this.subscribedCount,
-    this.shareCount,
-    this.commentCount,
-    this.trackCount,
+    // this.playCount,
+    // this.subscribedCount,
+    // this.shareCount,
+    // this.commentCount,
+    // this.trackCount,
     this.nickname,
     this.createTime,
     this.tags,
@@ -36,14 +36,14 @@ class PlayListItemModel {
   });
   PlayListItemModel.fromJson(Map<String, dynamic> json) {
     id = json['Id']?.toInt();
-    no = json['No']?.toInt();
+    // no = json['No']?.toInt();
     coverImgUrl = json['CoverImgUrl']?.toString();
     name = json['Name']?.toString();
-    playCount = json['PlayCount']?.toInt();
-    subscribedCount = json['SubscribedCount']?.toInt();
-    shareCount = json['ShareCount']?.toInt();
-    commentCount = json['CommentCount']?.toInt();
-    trackCount = json['TrackCount']?.toInt();
+    // playCount = json['PlayCount']?.toInt();
+    // subscribedCount = json['SubscribedCount']?.toInt();
+    // shareCount = json['ShareCount']?.toInt();
+    // commentCount = json['CommentCount']?.toInt();
+    // trackCount = json['TrackCount']?.toInt();
     nickname = json['Nickname']?.toString();
     createTime = json['CreateTime']?.toString();
     if (json['Tags'] != null) {
@@ -57,17 +57,43 @@ class PlayListItemModel {
     userId = json['UserId']?.toInt();
     avatarUrl = json['AvatarUrl']?.toString();
   }
+
+  PlayListItemModel.fromKugouJson(Map<String, dynamic> json) {
+    id = json['specialid']?.toInt();
+    // no = json['No']?.toInt();
+    coverImgUrl = json['imgurl']?.toString().replaceAll("{size}", "400");
+    name = json['specialname']?.toString();
+    // playCount = json['PlayCount']?.toInt();
+    // subscribedCount = json['SubscribedCount']?.toInt();
+    // shareCount = json['ShareCount']?.toInt();
+    // commentCount = json['CommentCount']?.toInt();
+    // trackCount = json['TrackCount']?.toInt();
+    nickname = json['username']?.toString();
+    createTime = json['publishtime']?.toString();
+    if (json['tags'] != null) {
+      final v = json['tags'];
+      final arr0 = <String>[];
+      v.forEach((v) {
+        arr0.add(v.toString());
+      });
+      tags = arr0;
+    }
+    userId = json['suid']?.toInt();
+    avatarUrl = json['user_avatar']?.toString();
+  }
+
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['Id'] = id;
-    data['No'] = no;
+    // data['No'] = no;
     data['CoverImgUrl'] = coverImgUrl;
     data['Name'] = name;
-    data['PlayCount'] = playCount;
-    data['SubscribedCount'] = subscribedCount;
-    data['ShareCount'] = shareCount;
-    data['CommentCount'] = commentCount;
-    data['TrackCount'] = trackCount;
+    // data['PlayCount'] = playCount;
+    // data['SubscribedCount'] = subscribedCount;
+    // data['ShareCount'] = shareCount;
+    // data['CommentCount'] = commentCount;
+    // data['TrackCount'] = trackCount;
     data['Nickname'] = nickname;
     data['CreateTime'] = createTime;
     if (tags != null) {

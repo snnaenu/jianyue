@@ -24,13 +24,20 @@ class PlayListView extends StatefulWidget {
   _PlayListViewState createState() => _PlayListViewState();
 }
 
-class _PlayListViewState extends State<PlayListView> {
+class _PlayListViewState extends State<PlayListView>
+    with TickerProviderStateMixin {
   final PlayListController controller = Get.put(PlayListController());
+  late TabController _tabController;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    _tabController = TabController(
+        vsync: this,
+        length: controller.state.titleList.length,
+        initialIndex: controller.state.selectedIndex);
   }
 
   @override
@@ -38,6 +45,55 @@ class _PlayListViewState extends State<PlayListView> {
     // TODO: implement dispose
     super.dispose();
     Get.delete<PlayListController>();
+  }
+
+  Widget tabBar() {
+    List<Widget> tabItems = controller.state.titleList
+        .map((item) => Tab(
+              text: item["title"],
+              height: 30.dp,
+            ))
+        .toList();
+    return Container(
+      // width: 160.dp,
+      height: 50.dp,
+      padding: EdgeInsets.symmetric(horizontal: 20.dp),
+      color: ThemeConfig.theme.appBarTheme.backgroundColor,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            "热门歌单",
+            style: ThemeConfig.theme.textTheme.headline1,
+          ),
+          Container(
+            // color: Colors.orange,
+            // alignment: Alignment.centerRight,
+            child: TabBar(
+                onTap: (index) => controller.updateIndex(index),
+                controller: _tabController,
+                isScrollable: true,
+                // labelPadding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                // indicatorPadding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                unselectedLabelColor:
+                    ThemeConfig.theme.textTheme.subtitle1!.color,
+                labelColor: ThemeConfig.theme.textTheme.headline1!.color,
+                unselectedLabelStyle: const TextStyle(
+                  fontSize: 14,
+                  color: Color(0xFFffffff),
+                ),
+                labelStyle: const TextStyle(
+                  fontSize: 14,
+                  color: Color(0xFFffffff),
+                ),
+                indicatorColor: const Color(0xffffffff),
+                indicatorSize: TabBarIndicatorSize.label,
+                indicatorWeight: 1.0,
+                tabs: tabItems),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -135,25 +191,51 @@ class _PlayListViewState extends State<PlayListView> {
       child: Stack(
         children: [
           GetBuilder<PlayListController>(builder: (controller) {
-            return ScrollConfiguration(
-              behavior:
-                  ScrollConfiguration.of(context).copyWith(scrollbars: false),
-              child: GridView.builder(
-                padding: EdgeInsets.all(20.dp),
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                controller: controller.state.scrollController,
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 300,
-                    mainAxisSpacing: 20.dp,
-                    crossAxisSpacing: 20.dp,
-                    childAspectRatio: 1.4),
-                itemBuilder: (BuildContext context, int index) {
-                  return itemWidget(index);
-                },
-                itemCount: controller.state.playList.length,
-              ),
+            return Column(
+              children: [
+                tabBar(),
+                Expanded(
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(context)
+                        .copyWith(scrollbars: false),
+                    child: GridView.builder(
+                      padding: EdgeInsets.all(20.dp),
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      controller: controller.state.scrollController,
+                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: 300,
+                          mainAxisSpacing: 20.dp,
+                          crossAxisSpacing: 20.dp,
+                          childAspectRatio: 1.4),
+                      itemBuilder: (BuildContext context, int index) {
+                        return itemWidget(index);
+                      },
+                      itemCount: controller.state.playList.length,
+                    ),
+                  ),
+                ),
+              ],
             );
+            // return ScrollConfiguration(
+            //   behavior:
+            //       ScrollConfiguration.of(context).copyWith(scrollbars: false),
+            //   child: GridView.builder(
+            //     padding: EdgeInsets.all(20.dp),
+            //     scrollDirection: Axis.vertical,
+            //     shrinkWrap: true,
+            //     controller: controller.state.scrollController,
+            //     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+            //         maxCrossAxisExtent: 300,
+            //         mainAxisSpacing: 20.dp,
+            //         crossAxisSpacing: 20.dp,
+            //         childAspectRatio: 1.4),
+            //     itemBuilder: (BuildContext context, int index) {
+            //       return itemWidget(index);
+            //     },
+            //     itemCount: controller.state.playList.length,
+            //   ),
+            // );
           }),
           Positioned(
               bottom: 30,
@@ -176,7 +258,7 @@ class _PlayListViewState extends State<PlayListView> {
             context,
             SongsView(
               playListItem: item,
-              sourceType: SongSourceType.playList,
+              sourceType: SongListSourceType.playList,
             ));
       },
       child: Container(
@@ -262,7 +344,8 @@ class _PlayListViewState extends State<PlayListView> {
             context,
             SongsView(
               playListItem: item,
-              sourceType: SongSourceType.playList,
+              sourceType: SongListSourceType.playList,
+              audioSource: controller.currentSourceType,
             ));
       },
       child: Container(

@@ -4,9 +4,10 @@ import 'package:weapon/model/play_list_item_model.dart';
 import 'package:weapon/model/rank_list_item_model.dart';
 import 'package:weapon/model/song_list_item.dart';
 import 'package:weapon/model/song_rank_model.dart';
+import 'package:weapon/search/search_state.dart';
 
 
-enum SongSourceType { playList, rankList }
+enum SongListSourceType { playList, rankList }
 
 class SongsState {
 
@@ -21,5 +22,6 @@ class SongsState {
   ScrollController scrollController = ScrollController();
   bool haveMore = true;
 
-  late SongSourceType sourceType;
+  late SongListSourceType sourceType;
+  late AudioSource? audioSource;
 }

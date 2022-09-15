@@ -177,7 +177,7 @@ class _RankListViewState extends State<RankListView> {
             context,
             SongsView(
               rankListItem: item,
-              sourceType: SongSourceType.rankList,
+              sourceType: SongListSourceType.rankList,
             ));
       },
       child: Container(

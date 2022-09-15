@@ -57,19 +57,21 @@ class KugouMusicRequest extends BaseMusicUtil {
     String id = map['hash'];
     String pic = "";
     List<Map<String, dynamic>> artist = [];
-    var result = await song(id);
-    if (result != null) {
-      pic = result['imgUrl']?.toString().replaceAll("{size}", "400") ?? "";
-      var authors = result["authors"];
-      if (authors != null && authors is List && authors.isNotEmpty) {
-        for (var element in authors) {
-          artist.add(
-              {"name": element["author_name"], "id": element["author_id"]});
-        }
-      } else {
-        artist.add({"name": filename.split("-").first.trim(), "id": ""});
-      }
-    }
+    // var result = await song(id);
+    // if (result != null) {
+    //   print(result);
+    //   pic = result['imgUrl']?.toString().replaceAll("{size}", "400") ?? "";
+    //   var authors = result["authors"];
+    //   if (authors != null && authors is List && authors.isNotEmpty) {
+    //     for (var element in authors) {
+    //       artist.add(
+    //           {"name": element["author_name"], "id": element["author_id"]});
+    //     }
+    //   } else {
+    //     artist.add({"name": filename.split("-").first.trim(), "id": ""});
+    //   }
+    // }
+    artist.add({"name": filename.split("-").first.trim(), "id": ""});
 
     return {
       'id': id,
@@ -132,6 +134,7 @@ class KugouMusicRequest extends BaseMusicUtil {
     RequestOptions options = RequestOptions(path: path, method: "GET");
     options.queryParameters = params;
     var result = await dio.fetch(options);
+    // print(result);
     List<Map<String, dynamic>> songs = [];
     if (result.statusCode != null && result.statusCode == 200) {
       dynamic data = json.decode(result.data);
@@ -166,6 +169,7 @@ class KugouMusicRequest extends BaseMusicUtil {
     RequestOptions options = RequestOptions(path: path, method: "POST");
     options.data = params;
     Response result = await dio.fetch(options);
+    // print(result.data);
     if (result.statusCode != null && result.statusCode == 200) {
       dynamic data = json.decode(result.data);
       if (data?['data']?[0]?['relate_goods'] != null) {
@@ -206,6 +210,7 @@ class KugouMusicRequest extends BaseMusicUtil {
         }
       }
     }
+    // print(map);
     return map;
   }
 
@@ -227,19 +232,24 @@ class KugouMusicRequest extends BaseMusicUtil {
       if (result.data is String) {
         data = json.decode(result.data);
       }
+      Map<String, dynamic> pa = {
+        'charset': 'utf-8',
+        'accesskey': data['candidates'][0]['accesskey'],
+        'id': data['candidates'][0]['id'],
+        'client': 'mobi',
+        'fmt': 'lrc',
+        'ver': 1,
+      };
       var response = await dio.fetch(RequestOptions(
           path: "http://lyrics.kugou.com/download",
           method: "GET",
-          queryParameters: {
-            'charset': 'utf8',
-            'accesskey': data['candidates'][0]['accesskey'],
-            'id': data['candidates'][0]['id'],
-            'client': 'mobi',
-            'fmt': 'lrc',
-            'ver': 1,
-          }));
+          queryParameters: pa));
+
       var responseMap = response.data;
-      var lyric = String.fromCharCodes(base64Decode(responseMap["content"]));
+      // print(base64Decode(responseMap["content"]));
+
+      Codec<String, String> stringToBase64 = utf8.fuse(base64);
+      String lyric = stringToBase64.decode(responseMap["content"]);
       return {"lyric": lyric, "tlyric": ""};
     }
     return null;
